@@ -7,8 +7,11 @@ int open(const char *pathname,int flag,...);
 int openat(int fd,const char* pathname,int flag,...);
 ```
 flag包括以下宏定义
+
 必选不兼容宏: O_RDONLY、O_WRONLY、O_RDWR、O_SEARCH、O_EXEC(前三个必有实现，后两个不一定)
+
 可以通过switch(flag & O_ACCMODE)的方式查看
+
 可选兼容:O_CREAT、O_TRUNC、O_APPEND、O_DIRECTORY、O_CLOEXEC、O_SYNC、O_DSYNC、O_EXCL、O_NOCTTY、O_NOFOLLOW、O_NONBLOCK
 
 当pathname为绝对路径时，openat指定的fd无效
@@ -30,6 +33,7 @@ int close(int fd)
 int lseek(int fd,off_t offset,int whence)
 ```
 whence可以是SEEK_SET(0)\SEEK_CUR(1)\SEEK_END(2)
+
 如果fd指向管道、FIFO、网络套接字会返回-1
 
 ```
@@ -38,9 +42,11 @@ ssize_t read(int fd,void *buf,size_t nbytes)
 ssize_t write(int fd,void *buf,size_t nbytes)
 ```
 返回读取/写入成功的字节数，读到末尾返回0
+
 终端设备最多每次读一行
 
 文件共享:文件的管理
+
 ![](./文件共享.png)
 
 ```
@@ -69,10 +75,15 @@ fsync和fdatasync都会等待缓存结束，但是前者包括数据和文件属
 int fcntl(int fd,int cmd,...)
 ```
 fcntl包含下面的功能:
+
 (1)复制文件描述符:F_DUPFD\F_DUPFD_CLOEXEC
+
 (2)获取/设置文件描述符标志:F_GETFD\F_SETFD
+
 (3)获取/设置文件状态标志:F_GETFL\F_SETFL
+
 (4)获取/设置异步IO所有全:F_GETOWN\F_SETOWN
+
 (5)获取/设置文件记录锁:F_GETTLK\F_SETLK\F_SETLKW
 
 
@@ -141,9 +152,13 @@ int main(int argc, char *argv[]) {
 
 ## 3.3
 假设一个进程执行下面3个函数调用：
+
 fdl = open(path,oflags);
+
 fd2 = dup(fd1):
+
 fd3 = open(path,oflags):
+
 面出类似于图3-9的结果图，对 fcntl作用于 fd1来说，F_SETFD命令会影响哪一个文件描述符?F_SETFL呢?
 
 fd1，fd2指向同一个文件描述符表项1，fd3指向文件描述符表项2，两个表项指向同一个v节点，F_SETFD影响fd1，FSETFL影响fd2;
@@ -151,11 +166,15 @@ fd1，fd2指向同一个文件描述符表项1，fd3指向文件描述符表项2
 略
 ## 3.5
 说明下面两个命令的区别
+
 ./a.out > outfile 2>&1
+
 ./a.out 2>&1 > out file
 
 shell命令行是自左向右读取，2>&1的命令可以理解为dup2(1,2)
+
 一:dup2(outfile,1)，dup2(1,2）最后1，2均指向outfile
+
 二:dup2(2,1),dup(outfile,1) 最后2指向标准输出，1指向outfile
 
 ## 3.6

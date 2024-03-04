@@ -1,16 +1,28 @@
 # 总结部分
 Unix标准:
+
 (1)ISO C
+
 (2)IEEE POSIX
+
 (3)SUS
+
 Unix实现:
+
 (1)SVR4
+
 (2)BSD
+
 (3)FreeBSD
+
 (3)Linux
+
 标准和实现的编译限制
+
 (1)确定的限制:头文件
+
 (2)和系统有关的限制:sysconf
+
 (3)和文件系统有关的限制:pathconf,fpathconf
 ```
 #include <unistd.h>
@@ -35,8 +47,8 @@ long fpathconf(int fd,const char *pathname,int name)
 - off_t(int):字节偏移数
 - pid_t(int):进程id
 - pthread_t(int):线程ID
--size_t(int):大小
--ssize_t(uint):大小
+- size_t(int):大小
+- ssize_t(uint):大小
 
 # 习题部分
 ## 2.1

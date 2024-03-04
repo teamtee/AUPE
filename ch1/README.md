@@ -8,11 +8,17 @@ char *strerror(int errnum);
 void perror(char *msg);
 ```
 时间值
+
 (1)time_t(int):日历时间,表示经过标准时间的秒数
+
 (2)clock_t(int):时钟时间，表示经过的时钟的周期数
+
 time -p 命令会返回三个时间
+
 - real 真实时间
+
 - user 用户CPU时间
+
 - system 系统CPU时间
 # 题目部分
 
